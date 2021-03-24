@@ -14,12 +14,11 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || "8000";
-const router = express.Router()
 
 /**
  *  App Configuration
  */
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "resources/views"));
 app.set('view engine', 'ejs');
 
 
