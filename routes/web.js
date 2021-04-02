@@ -1,3 +1,5 @@
+require('../app/http/middleware/admin_system_role')(req, res, next);
+
 module.exports = function (app) {
 
     // index page 
@@ -11,4 +13,4 @@ module.exports = function (app) {
     });
 
     //other routes..
-}
+};
