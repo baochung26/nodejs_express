@@ -1,12 +1,15 @@
+
+const User = require('../app/models/user');
+
 module.exports = function (app) {
 
     // index page 
-    app.get('/', function (req, res) {
+    app.get('/login', function (req, res) {
         res.render('pages/index');
     });
 
     // about page 
-    app.get('/about', function (req, res) {
+    app.get('/logout', function (req, res) {
         res.render('pages/about');
     });
 
