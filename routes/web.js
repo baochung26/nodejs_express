@@ -1,4 +1,3 @@
-require('../app/http/middleware/admin_system_role')(req, res, next);
 const User = require('../app/models/user');
 
 module.exports = function (app) {

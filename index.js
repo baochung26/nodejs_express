@@ -27,7 +27,7 @@ app.use(express.json())
 /**
  * Routes Definitions
  */
-require('./routes/web')(app);
+// require('./routes/web')(app);
 require('./routes/api')(app);
 
 /**
