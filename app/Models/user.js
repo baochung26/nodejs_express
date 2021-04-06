@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -50,6 +51,33 @@ userSchema.pre('save', async function (next) {
 
     next()
 })
+
+userSchema.methods.generateAuthToken = async function () {
+    console.log(process.env.JWT_SECRET)
+    console.log(process.env.JWT_EXPIRES_IN)
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
+    user.tokens = user.tokens.concat({ token })
+    await user.save()
+
+    return token
+}
+
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Error('Email not found.')
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        throw new Error('Password is invalid.')
+    }
+
+    return user
+}
 
 const User = mongoose.model('User', userSchema)
 

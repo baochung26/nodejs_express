@@ -1,78 +1,36 @@
 
 const User = require('../app/models/user')
+const auth = require('../app/http/middleware/auth')
+const { login, me, refresh_token, logout, logout_all } = require('../app/http/controllers/authController')
+const { createUser, gitListUsers, userDetails, updateUser } = require('../app/http/controllers/userController')
 
 module.exports = function (app) {
 
-    // create user
-    app.post('/users', async (req, res) => {
-        const user = new User(req.body)
-        try {
-            await user.save()
-            res.status(201).send(user)
-        } catch (e) {
-            res.status(400).send(e)
-        }
-    })
-
     // login
-    app.post('users/login', async (req, res) => {
-        res.render('pages/index');
-    })
+    app.post('/login', login)
+
+    // Login user info
+    app.get('/me', auth, me)
+
+    // Refresh token
+    app.post('/refresh-token', auth, refresh_token)
+
+    // Logout
+    app.post('/logout', auth, logout)
+
+    // Logout all
+    app.post('/logout-all', auth, logout_all)
+
+    // create user
+    app.post('/users', createUser)
 
     // get all user
-    app.get('/users', async (req, res) => {
-        try {
-            const users = await User.find({})
-            res.send(users)
-        } catch (e) {
-            res.status(500).send()
-        }
-    })
+    app.get('/users', gitListUsers)
 
     // find user by id
-    app.get('/users/:id', async (req, res) => {
-        const _id = req.params.id
-
-        try {
-            const user = await User.findById(_id)
-
-            if (!user) {
-                return res.status(404).send()
-            }
-
-            res.send(user)
-        } catch (e) {
-            res.status(500).send()
-        }
-    })
+    app.get('/users/:id', userDetails)
 
     // update user
-    app.patch('/users/:id', async (req, res) => {
-        const updates = Object.keys(req.body)
-        const allowedUpdates = ['name', 'email', 'password', 'age']
-        const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    app.patch('/users/:id', updateUser)
 
-        if (!isValidOperation) {
-            return res.status(400).send({ error: 'Invalid updates!' })
-        }
-
-        try {
-            const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
-
-            if (!user) {
-                return res.status(404).send()
-            }
-
-            res.send(user)
-        } catch (e) {
-            res.status(400).send(e)
-        }
-    })
-
-    // logout
-    app.post('/logout', async (req, res) => {
-        res.render('pages/about')
-    })
-
-    //other routes..
 }
