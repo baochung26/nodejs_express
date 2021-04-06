@@ -14,6 +14,11 @@ module.exports = function (app) {
         }
     })
 
+    // login
+    app.post('users/login', async (req, res) => {
+        res.render('pages/index');
+    })
+
     // get all user
     app.get('/users', async (req, res) => {
         try {
@@ -62,11 +67,6 @@ module.exports = function (app) {
         } catch (e) {
             res.status(400).send(e)
         }
-    })
-
-    // login
-    app.post('/login', async (req, res) => {
-        res.render('pages/index');
     })
 
     // logout
