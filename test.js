@@ -1,9 +1,21 @@
-const bcrypt = require('bcryptjs')
-const testHash = async () => {
-    const hashPassword = await bcrypt.hash('abbdef', 8)
-    console.log(hashPassword);
+// const bcrypt = require('bcryptjs')
+// const testHash = async () => {
+//     const hashPassword = await bcrypt.hash('abbdef', 8)
+//     console.log(hashPassword);
 
-    const isMatch = await bcrypt.compare('abbdef', hashPassword)
-    console.log(isMatch)
+//     const isMatch = await bcrypt.compare('abbdef', hashPassword)
+//     console.log(isMatch)
+// }
+// testHash()
+
+const aa = {
+    "name": "chungpb",
+    "age": 30
 }
-testHash()
+
+aa.toJSON = function() {
+
+    console.log(aa)
+    return this
+}
+console.log(JSON.stringify(aa))
