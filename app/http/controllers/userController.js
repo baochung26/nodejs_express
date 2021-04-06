@@ -2,7 +2,7 @@ require('dotenv').config();
 const User = require('../../models/user')
 
 // Create user
-exports.createUser = async (req, res) => {
+let createUser = async (req, res) => {
     const user = new User(req.body)
     try {
         await user.save()
@@ -13,7 +13,7 @@ exports.createUser = async (req, res) => {
 };
 
 // Get list users
-exports.gitListUsers = async (req, res) => {
+let getListUsers = async (req, res) => {
     try {
         const users = await User.find({})
         res.send(users)
@@ -24,7 +24,7 @@ exports.gitListUsers = async (req, res) => {
 
 
 // User detail
-exports.userDetails = async (req, res) => {
+let userDetails = async (req, res) => {
     const _id = req.params.id
 
     try {
@@ -41,7 +41,7 @@ exports.userDetails = async (req, res) => {
 };
 
 // Update user
-exports.updateUser = async (req, res) => {
+let updateUser = async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -62,3 +62,12 @@ exports.updateUser = async (req, res) => {
         res.status(400).send(e)
     }
 };
+
+let userController = {
+    createUser: createUser,
+    getListUsers: getListUsers,
+    userDetails: userDetails,
+    updateUser: updateUser
+}
+
+module.exports = userController

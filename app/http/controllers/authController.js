@@ -2,7 +2,7 @@ require('dotenv').config();
 const User = require('../../models/user')
 
 
-exports.login = async (req, res) => {
+let login = async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
@@ -17,12 +17,12 @@ exports.login = async (req, res) => {
 }
 
 
-exports.me = async (req, res) => {
+let me = async (req, res) => {
     res.send(req.user)
 };
 
 
-exports.refresh_token = async (req, res) => {
+let refreshToken = async (req, res) => {
     req.user.tokens = req.user.tokens.filter((token) => {
         return token.token !== req.token
     })
@@ -36,7 +36,7 @@ exports.refresh_token = async (req, res) => {
 };
 
 
-exports.logout = async (req, res) => {
+let logout = async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
@@ -51,7 +51,7 @@ exports.logout = async (req, res) => {
     }
 };
 
-exports.logout_all = async (req, res) => {
+let logoutAll = async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
@@ -62,3 +62,13 @@ exports.logout_all = async (req, res) => {
         res.status(500).send()
     }
 };
+
+let authController = {
+    login: login,
+    me: me,
+    refreshToken: refreshToken,
+    logout: logout,
+    logoutAll: logoutAll
+}
+
+module.exports = authController

@@ -1,36 +1,34 @@
-
-const User = require('../app/models/user')
 const auth = require('../app/http/middleware/auth')
-const { login, me, refresh_token, logout, logout_all } = require('../app/http/controllers/authController')
-const { createUser, gitListUsers, userDetails, updateUser } = require('../app/http/controllers/userController')
+const authController = require('../app/http/controllers/authController')
+const userController = require('../app/http/controllers/userController')
 
 module.exports = function (app) {
 
     // login
-    app.post('/login', login)
+    app.post('/login', authController.login)
 
     // Login user info
-    app.get('/me', auth, me)
+    app.get('/me', auth, authController.me)
 
     // Refresh token
-    app.post('/refresh-token', auth, refresh_token)
+    app.post('/refresh-token', auth, authController.refreshToken)
 
     // Logout
-    app.post('/logout', auth, logout)
+    app.post('/logout', auth, authController.logout)
 
     // Logout all
-    app.post('/logout-all', auth, logout_all)
+    app.post('/logout-all', auth, authController.logoutAll)
 
     // create user
-    app.post('/users', createUser)
+    app.post('/users', userController.createUser)
 
     // get all user
-    app.get('/users', gitListUsers)
+    app.get('/users', userController.getListUsers)
 
     // find user by id
-    app.get('/users/:id', userDetails)
+    app.get('/users/:id', userController.userDetails)
 
     // update user
-    app.patch('/users/:id', updateUser)
+    app.patch('/users/:id', userController.updateUser)
 
 }
