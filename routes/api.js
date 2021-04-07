@@ -1,34 +1,35 @@
-const auth = require('../app/http/middleware/auth')
+const express = require('express')
+const router = new express.Router()
+
+const authMiddleware = require('../app/http/middleware/auth')
 const authController = require('../app/http/controllers/authController')
 const userController = require('../app/http/controllers/userController')
 
-module.exports = function (app) {
+// login
+router.post('/login', authController.login)
 
-    // login
-    app.post('/login', authController.login)
+// Login user info
+router.get('/me', [authMiddleware], authController.me)
 
-    // Login user info
-    app.get('/me', auth, authController.me)
+// Refresh token
+router.post('/refresh-token', [authMiddleware], authController.refreshToken)
 
-    // Refresh token
-    app.post('/refresh-token', auth, authController.refreshToken)
+// Logout
+router.post('/logout', [authMiddleware], authController.logout)
 
-    // Logout
-    app.post('/logout', auth, authController.logout)
+// Logout all
+router.post('/logout-all', [authMiddleware], authController.logoutAll)
 
-    // Logout all
-    app.post('/logout-all', auth, authController.logoutAll)
+// create user
+router.post('/users', userController.createUser)
 
-    // create user
-    app.post('/users', userController.createUser)
+// get all user
+router.get('/users', userController.getListUsers)
 
-    // get all user
-    app.get('/users', userController.getListUsers)
+// find user by id
+router.get('/users/:id', userController.userDetails)
 
-    // find user by id
-    app.get('/users/:id', userController.userDetails)
+// update user
+router.patch('/users/:id', userController.updateUser)
 
-    // update user
-    app.patch('/users/:id', userController.updateUser)
-
-}
+module.exports = router

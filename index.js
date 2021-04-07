@@ -8,6 +8,7 @@ const express = require("express");
 require('./config/database');
 const path = require("path");
 require('dotenv').config();
+const routeApi = require('./routes/api')
 
 /**
  * App Variables
@@ -28,7 +29,7 @@ app.use(express.json())
  * Routes Definitions
  */
 // require('./routes/web')(app);
-require('./routes/api')(app);
+app.use(routeApi)
 
 /**
  * Server Activation

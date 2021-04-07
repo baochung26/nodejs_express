@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const User = require('../../models/user')
 
-const auth = async(req, res, next) => {
+const authMiddleware = async(req, res, next) => {
     const token = req.header('Authorization').replace('Bearer ', '')
     try {
         const data = jwt.verify(token, process.env.JWT_SECRET)
@@ -18,4 +18,4 @@ const auth = async(req, res, next) => {
     }
 
 }
-module.exports = auth
+module.exports = authMiddleware
