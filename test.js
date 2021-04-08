@@ -19,3 +19,11 @@ aa.toJSON = function() {
     return this
 }
 console.log(JSON.stringify(aa))
+
+
+const UserRoles = {
+    SUPPER_ADMIN: "Supper Admin",
+    ADMIN: "Admin",
+    STAFF: "Staff"
+}
+console.log(UserRoles.SUPPER_ADMIN)

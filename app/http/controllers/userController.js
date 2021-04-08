@@ -1,5 +1,5 @@
 require('dotenv').config();
-const User = require('../../models/user')
+const { User } = require('../../models/user')
 
 // Create user
 let createUser = async (req, res) => {

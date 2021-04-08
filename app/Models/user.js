@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
+const UserRoles = {
+    SUPPER_ADMIN: "Supper Admin",
+    ADMIN: "Admin",
+    STAFF: "Staff"
+}
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,6 +28,13 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    birth_day: {
+        type: Date
+    },
+    role: {
+        type: String,
+        default: UserRoles.STAFF
+    },
     password: {
         type: String,
         required: true,
@@ -38,7 +51,15 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 userSchema.methods.toJSON = function () {
@@ -54,7 +75,7 @@ userSchema.methods.toJSON = function () {
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
-
+    user.updated_at = Date.now
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
@@ -89,4 +110,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 const User = mongoose.model('User', userSchema)
 
-module.exports = User
+module.exports = {
+    User: User,
+    UserRoles: UserRoles
+}
