@@ -12,6 +12,7 @@ let login = async (req, res) => {
             "expires_in": process.env.JWT_EXPIRES_IN
         })
     } catch (e) {
+        console.log(e)
         res.status(400).send()
     }
 }

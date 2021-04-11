@@ -18,10 +18,7 @@ let createPost = async (req, res) => {
 // Get list posts
 let getListPosts = async (req, res) => {
     try {
-        const posts = await Post.find({}).populate('owner')
-        posts.forEach(post => {
-            console.log(post.owner.name)
-        });
+        const posts = await Post.find({}).populate('owner').exec()
         res.send(posts)
     } catch (e) {
         console.log(e)

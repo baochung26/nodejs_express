@@ -10,6 +10,12 @@ const UserRoles = {
     STAFF: "Staff"
 }
 
+const opts = {
+    toJSON: {
+        virtuals: true
+    }
+};
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -60,17 +66,17 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-})
+}, opts)
 
-userSchema.methods.toJSON = function () {
-    const user = this
-    const userObject = user.toObject()
+// userSchema.methods.toJSON = function () {
+//     const user = this
+//     const userObject = user.toObject()
 
-    delete userObject.password
-    delete userObject.tokens
+//     delete userObject.password
+//     delete userObject.tokens
 
-    return userObject
-}
+//     return userObject
+// }
 
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {

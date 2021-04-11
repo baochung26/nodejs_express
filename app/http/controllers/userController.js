@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { User } = require('../../models/user')
+// const listUsersTransformer = require('../../transformers/listUsersTransformer')
 
 // Create user
 let createUser = async (req, res) => {
@@ -15,9 +16,12 @@ let createUser = async (req, res) => {
 // Get list users
 let getListUsers = async (req, res) => {
     try {
-        const users = await User.find({})
-        res.send(users)
+        const users = await User.find({}).populate('posts', 'name content').exec()
+        console.log(users)
+        // const data = listUsersTransformer.transformer(users)
+        res.json(users)
     } catch (e) {
+        console.log(e)
         res.status(500).send()
     }
 }
