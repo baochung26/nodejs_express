@@ -10,7 +10,7 @@ let createUser = async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
-};
+}
 
 // Get list users
 let getListUsers = async (req, res) => {
@@ -20,7 +20,7 @@ let getListUsers = async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-};
+}
 
 
 // User detail
@@ -38,7 +38,7 @@ let userDetails = async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-};
+}
 
 // Update user
 let updateUser = async (req, res) => {
@@ -61,7 +61,7 @@ let updateUser = async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
-};
+}
 
 let userController = {
     createUser: createUser,

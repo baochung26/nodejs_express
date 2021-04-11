@@ -4,6 +4,11 @@ const router = new express.Router()
 const authMiddleware = require('../app/http/middleware/auth')
 const authController = require('../app/http/controllers/authController')
 const userController = require('../app/http/controllers/userController')
+const postController = require('../app/http/controllers/postController')
+
+
+// create user
+router.post('/users', userController.createUser)
 
 // login
 router.post('/login', authController.login)
@@ -20,9 +25,6 @@ router.post('/logout', [authMiddleware], authController.logout)
 // Logout all
 router.post('/logout-all', [authMiddleware], authController.logoutAll)
 
-// create user
-router.post('/users', userController.createUser)
-
 // get all user
 router.get('/users', userController.getListUsers)
 
@@ -31,5 +33,11 @@ router.get('/users/:id', userController.userDetails)
 
 // update user
 router.patch('/users/:id', userController.updateUser)
+
+// create post
+router.post('/posts', [authMiddleware], postController.createPost)
+
+// get all user
+router.get('/posts', [authMiddleware], postController.getListPosts)
 
 module.exports = router

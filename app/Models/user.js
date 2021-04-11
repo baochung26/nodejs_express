@@ -108,6 +108,13 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
+userSchema.virtual('posts', {
+    ref: 'Posts',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = {
