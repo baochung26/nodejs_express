@@ -18,7 +18,8 @@ const opts = {
             delete ret['tokens']
             return ret
         }
-    }
+    },
+    collection: 'users' // Sử dụng thuộc tính này để thay đổi default collection name
 };
 
 const userSchema = new mongoose.Schema({
@@ -126,7 +127,7 @@ userSchema.virtual('posts', {
 })
 
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema) // Defaul tạo collection thêm s
 
 module.exports = {
     User: User,

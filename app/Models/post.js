@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 
+const opts = {
+    toJSON: {
+        virtuals: true
+    }
+};
 
 const postSchema = new mongoose.Schema({
     name: {
@@ -16,7 +21,7 @@ const postSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Users'
+        ref: 'User' // Tên model related
     },
     created_at: {
         type: Date,
@@ -26,7 +31,7 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-})
+}, opts)
 
 // Hash the plain text password before saving
 postSchema.pre('save', async function (next) {
