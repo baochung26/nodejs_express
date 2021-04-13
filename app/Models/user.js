@@ -12,7 +12,12 @@ const UserRoles = {
 
 const opts = {
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        transform: function (doc, ret, opt) {
+            delete ret['password']
+            delete ret['tokens']
+            return ret
+        }
     }
 };
 

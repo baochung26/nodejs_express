@@ -17,7 +17,6 @@ let createUser = async (req, res) => {
 let getListUsers = async (req, res) => {
     try {
         const users = await User.find({}).populate('posts', 'name content').exec()
-        console.log(users)
         // const data = listUsersTransformer.transformer(users)
         res.json(users)
     } catch (e) {
