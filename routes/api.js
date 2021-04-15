@@ -40,4 +40,7 @@ router.post('/posts', [authMiddleware], postController.createPost)
 // get all user
 router.get('/posts', [authMiddleware], postController.getListPosts)
 
+
+router.get('/test-helper', postController.helperTest)
+
 module.exports = router

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Post = require('../../models/post')
+const testHelper = require('../../helpers/test')
 
 // Create post
 let createPost = async (req, res) => {
@@ -67,11 +68,17 @@ let updatePost = async (req, res) => {
     }
 }
 
+let helperTest = async (req, res) => {
+    let aaa = testHelper('text')
+    res.send(aaa)
+}
+
 let postController = {
     createPost: createPost,
     getListPosts: getListPosts,
     postDetails: postDetails,
-    updatePost: updatePost
+    updatePost: updatePost,
+    helperTest: helperTest
 }
 
 module.exports = postController
